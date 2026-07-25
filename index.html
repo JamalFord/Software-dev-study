@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSC 3350 - Final Exam Cram & Study WebApp</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <!-- Graduation Cap Icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2L1 7L12 12L21 7.90909V15H23V7L12 2ZM3.74312 8.24687L12 4.49375L20.2569 8.24687L12 12.0001L3.74312 8.24687ZM5 11.8182V16L12 20L19 16V11.8182L12 15.0001L5 11.8182Z"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1>CSC 3350 FINAL</h1>
+          <span>Exam Study Console</span>
+        </div>
+      </div>
+
+      <nav style="flex:1;">
+        <ul class="nav-menu">
+          <li>
+            <a class="nav-link active" data-target="overview">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+              Overview & Strategy
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" data-target="diagrams">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              Diagrams Visual Gallery
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" data-target="planner">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              No-Diagram Cheat Sheet
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" data-target="sql">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              SQL Queries Masterclass
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" data-target="patterns">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              Design Patterns Decoded
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" data-target="testing">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              TDD & Unit Testing Lab
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" data-target="sim">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Practice Exam Simulator
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="exam-countdown-box">
+          <div class="countdown-label">Final Exam Countdown</div>
+          <div class="countdown-digits" id="exam-countdown">00h : 00m : 00s</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <main class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="search-box">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input" id="search-input" placeholder="Quick search SQL queries, diagrams, patterns, TDD, or UML text rules...">
+        </div>
+        <div class="badge-pills">
+          <div class="pill">Date: <strong>July 28, 2026</strong></div>
+          <div class="pill">Format: <strong>Handwritten (A4)</strong></div>
+          <div class="pill" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.08); color: var(--color-error);">Rule: <strong>NO DIAGRAMS ON SHEET</strong></div>
+        </div>
+      </header>
+
+      <!-- Title Area -->
+      <div class="page-title-area">
+        <h2 class="page-title">CSC 3350 Final Exam Study Hub</h2>
+        <p class="page-subtitle">Comprehensive cramming hub for SQL, Design Patterns, TDD/Testing, UML Diagrams Visuals, and Java Debugging. Exam on Tuesday, July 28, 2026.</p>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- VIEW 1: OVERVIEW & STRATEGY -->
+      <!-- ========================================= -->
+      <div class="view-panel active" id="overview-panel">
+        <div class="rule-alert-banner">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z"></path></svg>
+          <div class="rule-alert-text">
+            <strong>CRITICAL PROFESSOR RULE:</strong> Your handwritten A4 cheat sheet <strong>CANNOT HAVE ANY DIAGRAMS OR GRAPHS</strong> drawn on it. Use our <strong>Diagrams Visual Gallery</strong> tab on this site to memorize how diagrams look so you can answer exam questions effortlessly!
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <div class="glass-card accent-indigo">
+            <div class="card-header-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </div>
+            <div class="card-heading">Final Exam Syllabus</div>
+            <div class="card-body-text">
+              Primary topics covered in the final:
+              <ul class="bullet-list">
+                <li><strong>System Modeling & UML:</strong> Visuals and text rules for Use Cases, Class Diagrams, Sequence Diagrams, Activity Diagrams, and Context Diagrams.</li>
+                <li><strong>SQL Databases:</strong> SELECT, WHERE, LIKE, BETWEEN, IN, NULL checks, GROUP BY, HAVING, INNER JOIN, LEFT JOIN, Self-JOIN.</li>
+                <li><strong>Design Patterns:</strong> Creational (Singleton, Factory), Structural (Adapter, Decorator), Behavioral (Observer, Strategy).</li>
+                <li><strong>Testing & TDD:</strong> Red-Green-Refactor, Unit Test Templates, Equivalence Partitioning, Boundary Value Analysis.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="glass-card accent-cyan">
+            <div class="card-header-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div class="card-heading">Exam Structure</div>
+            <div class="card-body-text">
+              What to expect on paper (July 28 @ 2PM):
+              <ul class="bullet-list">
+                <li><strong>Section A:</strong> Multiple Choice Questions (MCQs) & Short Answer Questions on TDD, SQL, Design Patterns, and UML diagram identification.</li>
+                <li><strong>Section B:</strong> SQL query writing (HR, Retail, Org schemas), Java OOP refactoring, and Test Case generation.</li>
+                <li><strong>Cheat Sheet:</strong> Single 8x11.5 (A4) handwritten paper. ZERO diagrams allowed!</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="glass-card accent-emerald">
+            <div class="card-header-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <div class="card-heading">Coding & Debugging Focus</div>
+            <div class="card-body-text">
+              Fixing midterm weaknesses:
+              <ul class="bullet-list">
+                <li><strong>NullPointer Prevention:</strong> Place constants on left side of comparison (e.g. <code>"ADMIN".equals(input)</code>).</li>
+                <li><strong>Stream Closing:</strong> Close DB & Socket streams inside <code>finally</code> blocks or try-with-resources.</li>
+                <li><strong>Collection Return:</strong> Return empty <code>new ArrayList<>()</code> instead of <code>null</code>.</li>
+                <li><strong>Constructor Injection:</strong> Inject interfaces into classes to satisfy DIP.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- NEW VIEW: DIAGRAMS VISUAL GALLERY -->
+      <!-- ========================================= -->
+      <div class="view-panel" id="diagrams-panel">
+        <div class="diagram-category-bar">
+          <button class="diag-tab-btn active" data-diag="usecase">1. Use Case Diagram</button>
+          <button class="diag-tab-btn" data-diag="classrel">2. Class Relationships</button>
+          <button class="diag-tab-btn" data-diag="sequence">3. Sequence Diagram</button>
+          <button class="diag-tab-btn" data-diag="activity">4. Activity Diagram</button>
+          <button class="diag-tab-btn" data-diag="context">5. Context Diagram</button>
+          <button class="diag-tab-btn" data-diag="er">6. ER Diagram (Database)</button>
+          <button class="diag-tab-btn" data-diag="observer">7. Observer Pattern</button>
+          <button class="diag-tab-btn" data-diag="strategy">8. Strategy Pattern</button>
+          <button class="diag-tab-btn" data-diag="adapter">9. Adapter Pattern</button>
+          <button class="diag-tab-btn" data-diag="tddcycle">10. TDD Cycle</button>
+        </div>
+
+        <div class="diagram-card-viewer">
+          <div class="svg-render-container" id="svg-render-area">
+            <!-- SVG rendered dynamically via app.js -->
+          </div>
+
+          <div class="diag-info-box">
+            <h3 id="diag-title">Use Case Diagram Visual</h3>
+            <div class="diag-desc-text" id="diag-desc">
+              Shows actors interacting with system functions. Includes system boundary, actors, use cases, &lt;&lt;include&gt;&gt; (mandatory) and &lt;&lt;extend&gt;&gt; (optional) relationships.
+            </div>
+
+            <div class="diag-memorize-tips" id="diag-tips">
+              <strong>EXAM MEMORIZATION KEYS:</strong><br>
+              • <strong>Actor:</strong> Stick figure OUTSIDE boundary.<br>
+              • <strong>Include Arrow:</strong> Points TO the mandatory case (Base --&lt;&lt;include&gt;&gt;--&gt; Included).<br>
+              • <strong>Extend Arrow:</strong> Points FROM optional BACK TO base (Optional --&lt;&lt;extend&gt;&gt;--&gt; Base).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- VIEW 3: NO-DIAGRAM CHEAT SHEET PLANNER -->
+      <!-- ========================================= -->
+      <div class="view-panel" id="planner-panel">
+        <div class="cheat-planner-layout">
+          <div class="sheet-mockup-wrapper">
+            <h3 style="color:#fff; margin-bottom:1rem;">Interactive A4 Sheet Layout (Click a Quadrant)</h3>
+            <div class="a4-sheet">
+              <div class="a4-quadrant active" data-id="quad-1">
+                <div class="quad-header">
+                  <span>Quad 1: UML Text Rules</span>
+                  <span class="quad-badge">1</span>
+                </div>
+                <div class="quad-preview-text">Use Case, Class, Sequence, Activity, Context notation in text format...</div>
+              </div>
+
+              <div class="a4-quadrant" data-id="quad-2">
+                <div class="quad-header">
+                  <span>Quad 2: SQL Cheat Code</span>
+                  <span class="quad-badge">2</span>
+                </div>
+                <div class="quad-preview-text">SELECT, JOIN, WHERE, GROUP BY, HAVING, NULL checks, LIKE wildcards...</div>
+              </div>
+
+              <div class="a4-quadrant" data-id="quad-3">
+                <div class="quad-header">
+                  <span>Quad 3: Design Patterns</span>
+                  <span class="quad-badge">3</span>
+                </div>
+                <div class="quad-preview-text">Singleton, Factory, Adapter, Decorator, Observer, Strategy Java code...</div>
+              </div>
+
+              <div class="a4-quadrant" data-id="quad-4">
+                <div class="quad-header">
+                  <span>Quad 4: TDD & Debugging</span>
+                  <span class="quad-badge">4</span>
+                </div>
+                <div class="quad-preview-text">Red-Green-Refactor, Test Case Table, BVA values, Java NPE fixes...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detail Card -->
+          <div class="quad-detail-card">
+            <div class="detail-head">
+              <div style="font-weight:700; color:#fff; font-size:1.1rem;" id="detail-title">Side 1, Top: System Modeling & UML Text Rules</div>
+              <span class="detail-tag" id="detail-tag">UML Rules & Text Syntax</span>
+            </div>
+
+            <p style="font-size:0.85rem; color:var(--text-secondary);">
+              Copy the text below directly onto your physical handwritten paper. It uses ZERO diagrams while covering 100% of UML rules:
+            </p>
+
+            <div class="copy-text-area" id="copy-text-area">
+              <!-- Loaded dynamically via JS -->
+            </div>
+
+            <button class="btn-action" id="copy-cheat-btn" style="width:100%; margin-top:1.25rem;">
+              Copy Text to Handwritten Sheet
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- VIEW 4: SQL QUERIES MASTERCLASS -->
+      <!-- ========================================= -->
+      <div class="view-panel" id="sql-panel">
+        <div class="sql-workbench">
+          <!-- Left side Schema Selection -->
+          <ul class="schema-selector-list">
+            <li>
+              <div class="schema-btn active" data-schema="schema1">
+                <div class="schema-title">Schema 1 — HR</div>
+                <div class="schema-desc">Employees & Departments (15 Queries)</div>
+              </div>
+            </li>
+            <li>
+              <div class="schema-btn" data-schema="schema2">
+                <div class="schema-title">Schema 2 — Retail</div>
+                <div class="schema-desc">Customers, Orders & Products (12 Queries)</div>
+              </div>
+            </li>
+            <li>
+              <div class="schema-btn" data-schema="schema3">
+                <div class="schema-title">Schema 3 — Org Structure</div>
+                <div class="schema-desc">Depts, Projects, Towns & Self-JOINs (7 Queries)</div>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Right side SQL queries list -->
+          <div class="sql-query-viewer" id="sql-content-area">
+            <!-- Loaded dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- VIEW 5: DESIGN PATTERNS DECODED -->
+      <!-- ========================================= -->
+      <div class="view-panel" id="patterns-panel">
+        <div class="patterns-grid">
+          <!-- Singleton -->
+          <div class="pattern-card">
+            <div class="pattern-header">
+              <div class="pattern-title">1. Singleton Pattern</div>
+              <span class="pattern-type-tag tag-creational">Creational</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>Intent:</strong> Ensure a class has ONLY ONE instance and provide a global access point.
+            </p>
+            <div class="pattern-problem-box">
+              <strong>Exam Scenario:</strong> Central logging service or database connection pool that must be shared app-wide.
+            </div>
+            <div class="pattern-code-box">public class DBConnection {
+  private static DBConnection _instance;
+  private DBConnection() {} // Private Constructor!
+  public static synchronized DBConnection getInstance() {
+    if (_instance == null) _instance = new DBConnection();
+    return _instance;
+  }
+}</div>
+          </div>
+
+          <!-- Factory Method -->
+          <div class="pattern-card">
+            <div class="pattern-header">
+              <div class="pattern-title">2. Factory Method</div>
+              <span class="pattern-type-tag tag-creational">Creational</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>Intent:</strong> Define interface for creating an object, but let subclasses decide which class to instantiate.
+            </p>
+            <div class="pattern-problem-box">
+              <strong>Exam Scenario:</strong> Graphics editor supporting Windows, macOS, and Linux UI components.
+            </div>
+            <div class="pattern-code-box">interface Button { void render(); }
+class WinButton implements Button { public void render() { ... } }
+abstract class Dialog {
+  abstract Button createButton(); // Factory Method
+}</div>
+          </div>
+
+          <!-- Adapter -->
+          <div class="pattern-card">
+            <div class="pattern-header">
+              <div class="pattern-title">3. Adapter Pattern</div>
+              <span class="pattern-type-tag tag-structural">Structural</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>Intent:</strong> Convert interface of a class into another interface clients expect (Wrapper for legacy code).
+            </p>
+            <div class="pattern-problem-box">
+              <strong>Exam Scenario:</strong> New HR system needs to talk to old legacy payroll system without modifying old code.
+            </div>
+            <div class="pattern-code-box">public class PayrollAdapter implements INewHR {
+  private LegacyPayroll _legacy; // Reference to legacy
+  public PayrollAdapter(LegacyPayroll legacy) { this._legacy = legacy; }
+  public void processPay() { _legacy.oldPayMethod(); } // Delegate
+}</div>
+          </div>
+
+          <!-- Decorator -->
+          <div class="pattern-card">
+            <div class="pattern-header">
+              <div class="pattern-title">4. Decorator Pattern</div>
+              <span class="pattern-type-tag tag-structural">Structural</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>Intent:</strong> Attach additional responsibilities to an object dynamically at runtime without altering class.
+            </p>
+            <div class="pattern-problem-box">
+              <strong>Exam Scenario:</strong> Adding scrollbars to text box, borders to buttons, or coffee toppings.
+            </div>
+            <div class="pattern-code-box">abstract class WidgetDecorator implements Widget {
+  protected Widget _wrappedWidget;
+  public WidgetDecorator(Widget w) { this._wrappedWidget = w; }
+  public void draw() { _wrappedWidget.draw(); }
+}</div>
+          </div>
+
+          <!-- Observer -->
+          <div class="pattern-card">
+            <div class="pattern-header">
+              <div class="pattern-title">5. Observer Pattern</div>
+              <span class="pattern-type-tag tag-behavioral">Behavioral</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>Intent:</strong> Publish/Subscribe model. When one object changes state, all subscribers are updated.
+            </p>
+            <div class="pattern-problem-box">
+              <strong>Exam Scenario:</strong> University sends Email, SMS, Slack notifications when course is cancelled.
+            </div>
+            <div class="pattern-code-box">interface Observer { void update(String msg); }
+class CourseSubject {
+  private List<Observer> _observers = new ArrayList<>();
+  public void notify(String msg) {
+    for (Observer o : _observers) o.update(msg);
+  }
+}</div>
+          </div>
+
+          <!-- Strategy -->
+          <div class="pattern-card">
+            <div class="pattern-header">
+              <div class="pattern-title">6. Strategy Pattern</div>
+              <span class="pattern-type-tag tag-behavioral">Behavioral</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              <strong>Intent:</strong> Encapsulate family of interchangeable algorithms and select best fit at runtime.
+            </p>
+            <div class="pattern-problem-box">
+              <strong>Exam Scenario:</strong> Shipping calculator with <code>if (country == "USA") ... else if ("Canada")</code> ladder.
+            </div>
+            <div class="pattern-code-box">interface IShippingStrategy { double calculate(Order o); }
+class USAShipping implements IShippingStrategy { ... }
+class OrderService {
+  private IShippingStrategy _strategy;
+  public OrderService(IShippingStrategy s) { this._strategy = s; }
+}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- VIEW 6: TDD & TESTING LAB -->
+      <!-- ========================================= -->
+      <div class="view-panel" id="testing-panel">
+        <div class="tdd-workspace">
+          <!-- Left: Unit Test Case Generator -->
+          <div class="test-template-box">
+            <h3 style="color:#fff; margin-bottom:0.75rem;">Unit Test Case Document Structure</h3>
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">
+              If Section B asks you to write test cases for a scenario (e.g. SmartHome Login), write this exact structure:
+            </p>
+            <div style="background-color:#0b0f19; border:1px solid var(--border-glass); padding:1rem; border-radius:12px; font-family:var(--font-mono); font-size:0.8rem; color:var(--text-primary); white-space:pre-wrap;">Test Case ID: TC_LOGIN_001
+Test Scenario: Valid User Login
+Pre-Condition: Registered user exists in DB, on login page.
+Inputs: Username="testuser", Password="validPass123"
+Test Steps:
+  1. Navigate to login page.
+  2. Enter "testuser" in username field.
+  3. Enter "validPass123" in password field.
+  4. Click "Login" button.
+Expected Output (Oracle): User redirected to Dashboard, session token created.
+Actual Output: User redirected to Dashboard.
+Status: PASS
+Post-Condition / Teardown: Session token saved, user logged out.</div>
+          </div>
+
+          <!-- Right: Boundary Value Analysis Calculator -->
+          <div class="bva-calculator-card">
+            <h3 style="color:#fff; margin-bottom:0.5rem;">Boundary Value Analysis (BVA) Calculator</h3>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">
+              Input a valid range [MIN, MAX] to calculate the 6 boundary values required on the exam:
+            </p>
+
+            <div class="calc-input-row">
+              <div class="calc-field">
+                <label>Minimum Value (e.g., 58000)</label>
+                <input type="number" id="min-val" value="58000">
+              </div>
+              <div class="calc-field">
+                <label>Maximum Value (e.g., 105000)</label>
+                <input type="number" id="max-val" value="105000">
+              </div>
+            </div>
+
+            <button class="btn-action" id="calc-bva-btn" style="width:100%;">Calculate BVA Test Values</button>
+
+            <div class="bva-results" id="bva-results-box">
+              Click calculate to view boundary values...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================= -->
+      <!-- VIEW 7: PRACTICE EXAM SIMULATOR -->
+      <!-- ========================================= -->
+      <div class="view-panel" id="sim-panel">
+        <div class="exam-sim-container">
+          <div class="exam-sim-header">
+            <div>
+              <h3 style="color:#fff; font-size:1.3rem;">Final Exam Practice Simulator</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary);">Test yourself on SQL, TDD, Design Patterns, and Debugging.</p>
+            </div>
+            <div style="font-family:var(--font-mono); color:var(--color-secondary);">
+              Score: <span id="sim-score" style="color:var(--color-success); font-weight:700;">0</span> / <span id="sim-total">6</span>
+            </div>
+          </div>
+
+          <div class="sim-q-card">
+            <div style="font-size:0.8rem; color:var(--color-accent); font-weight:700; margin-bottom:0.5rem;">Question <span id="sim-current-index">1</span></div>
+            <div class="sim-q-title" id="sim-q-title">Loading question...</div>
+
+            <div class="sim-opt-list" id="sim-opt-list">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div class="sim-explanation" id="sim-exp">
+            <!-- Rendered via JS -->
+          </div>
+
+          <div class="sim-actions">
+            <button class="btn-action" id="sim-next-btn" disabled>Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
