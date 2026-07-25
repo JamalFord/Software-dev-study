@@ -483,54 +483,127 @@ Post-Condition / Teardown: Session token saved, user logged out.</div>
       <!-- VIEW 7: PRACTICE QUIZZES & EXAM SIMULATOR -->
       <!-- ========================================= -->
       <div class="view-panel" id="sim-panel">
-        <div class="exam-sim-container">
-          <!-- Quiz Category Nav Buttons -->
-          <div class="quiz-section-nav">
-            <button class="quiz-sec-btn active" data-cat="all">🏆 Full Final Exam (30 Qs)</button>
-            <button class="quiz-sec-btn" data-cat="uml">📐 1. UML Diagrams & Visuals (8 Qs)</button>
-            <button class="quiz-sec-btn" data-cat="sql">💾 2. SQL Queries & JOINs (8 Qs)</button>
-            <button class="quiz-sec-btn" data-cat="patterns">⚙️ 3. Design Patterns (7 Qs)</button>
-            <button class="quiz-sec-btn" data-cat="tdd">🧪 4. TDD & Debugging (7 Qs)</button>
+        <!-- 1. QUIZ CATEGORY MENU (Default view when opening tab) -->
+        <div id="quiz-menu-view">
+          <div style="margin-bottom: 1.5rem;">
+            <h3 style="font-size:1.4rem; color:#ffffff; font-weight:800;">Select a Quiz Section to Start</h3>
+            <p style="font-size:0.9rem; color:var(--text-secondary);">Choose a specific topic to practice or launch the full 30-question exam simulation.</p>
           </div>
 
-          <!-- Progress Bar -->
-          <div class="progress-bar-wrapper">
-            <div class="progress-bar-fill" id="quiz-progress-bar"></div>
+          <div class="quiz-menu-grid">
+            <!-- Full Exam Card -->
+            <div class="quiz-menu-card highlight-card" data-start-cat="all">
+              <div class="quiz-card-badge">COMPREHENSIVE</div>
+              <div class="quiz-card-icon">🏆</div>
+              <div class="quiz-card-title">Full Final Exam Challenge</div>
+              <div class="quiz-card-desc">30 Mixed Questions covering Section A & B: UML Graph Identification, SQL JOINs, Design Patterns, & TDD.</div>
+              <div class="quiz-card-meta">
+                <span>⏱️ ~25 mins</span>
+                <span>📋 30 Questions</span>
+              </div>
+              <button class="btn-start-quiz">Start Full Exam</button>
+            </div>
+
+            <!-- Category 1: UML Diagrams -->
+            <div class="quiz-menu-card" data-start-cat="uml">
+              <div class="quiz-card-icon">📐</div>
+              <div class="quiz-card-title">1. UML & Visual Diagrams</div>
+              <div class="quiz-card-desc">8 Visual graph questions: Use Cases, Class relationship symbols, Sequence lifelines, & Activity decisions.</div>
+              <div class="quiz-card-meta">
+                <span>⏱️ ~8 mins</span>
+                <span>📋 8 Questions</span>
+              </div>
+              <button class="btn-start-quiz">Start Category</button>
+            </div>
+
+            <!-- Category 2: SQL Database Queries -->
+            <div class="quiz-menu-card" data-start-cat="sql">
+              <div class="quiz-card-icon">💾</div>
+              <div class="quiz-card-title">2. SQL Queries & JOINs</div>
+              <div class="quiz-card-desc">8 Questions covering Schemas 1, 2, & 3: SELECT, INNER JOIN, LEFT JOIN, GROUP BY, HAVING, & NULL checks.</div>
+              <div class="quiz-card-meta">
+                <span>⏱️ ~8 mins</span>
+                <span>📋 8 Questions</span>
+              </div>
+              <button class="btn-start-quiz">Start Category</button>
+            </div>
+
+            <!-- Category 3: Design Patterns -->
+            <div class="quiz-menu-card" data-start-cat="patterns">
+              <div class="quiz-card-icon">⚙️</div>
+              <div class="quiz-card-title">3. Design Patterns & Refactoring</div>
+              <div class="quiz-card-desc">7 Questions: Singleton, Factory Method, Adapter, Decorator, Observer, and Strategy scenarios.</div>
+              <div class="quiz-card-meta">
+                <span>⏱️ ~7 mins</span>
+                <span>📋 7 Questions</span>
+              </div>
+              <button class="btn-start-quiz">Start Category</button>
+            </div>
+
+            <!-- Category 4: TDD & Testing -->
+            <div class="quiz-menu-card" data-start-cat="tdd">
+              <div class="quiz-card-icon">🧪</div>
+              <div class="quiz-card-title">4. TDD, Testing & Debugging</div>
+              <div class="quiz-card-desc">7 Questions: Red-Green-Refactor cycle, Boundary Value Analysis (BVA), & NullPointer fixes.</div>
+              <div class="quiz-card-meta">
+                <span>⏱️ ~7 mins</span>
+                <span>📋 7 Questions</span>
+              </div>
+              <button class="btn-start-quiz">Start Category</button>
+            </div>
           </div>
+        </div>
 
-          <div class="exam-sim-header">
-            <div>
-              <h3 style="color:#fff; font-size:1.3rem;" id="quiz-cat-title">Full Final Exam Challenge</h3>
-              <p style="font-size:0.85rem; color:var(--text-secondary);" id="quiz-cat-subtitle">Comprehensive mix of Section A & B exam questions.</p>
-            </div>
-            <div style="font-family:var(--font-mono); color:var(--color-secondary);">
-              Score: <span id="sim-score" style="color:var(--color-success); font-weight:700;">0</span> / <span id="sim-total">30</span>
-            </div>
-          </div>
-
-          <div class="sim-q-card">
-            <div style="font-size:0.8rem; color:var(--color-accent); font-weight:700; margin-bottom:0.5rem;">
-              Question <span id="sim-current-index">1</span> of <span id="sim-total-index">30</span>
-            </div>
-
-            <!-- Visual Diagram Box for Graph Questions -->
-            <div class="quiz-diagram-box" id="quiz-diagram-box" style="display:none;">
-              <!-- Embedded SVG diagram rendered dynamically -->
+        <!-- 2. ACTIVE QUIZ INTERFACE (Hidden until category is selected) -->
+        <div id="quiz-active-view" style="display:none;">
+          <div class="exam-sim-container">
+            <!-- Top Action Header -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <button class="btn-back-menu" id="btn-back-menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Quiz Menu
+              </button>
+              <div style="font-family:var(--font-mono); color:var(--color-secondary); font-size:1rem; font-weight:700;">
+                Score: <span id="sim-score" style="color:var(--color-success);">0</span> / <span id="sim-total">30</span>
+              </div>
             </div>
 
-            <div class="sim-q-title" id="sim-q-title">Loading question...</div>
-
-            <div class="sim-opt-list" id="sim-opt-list">
-              <!-- Rendered via JS -->
+            <!-- Progress Bar -->
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar-fill" id="quiz-progress-bar"></div>
             </div>
-          </div>
 
-          <div class="sim-explanation" id="sim-exp">
-            <!-- Rendered via JS -->
-          </div>
+            <div class="exam-sim-header">
+              <div>
+                <h3 style="color:#fff; font-size:1.3rem;" id="quiz-cat-title">Full Final Exam Challenge</h3>
+                <p style="font-size:0.85rem; color:var(--text-secondary);" id="quiz-cat-subtitle">Comprehensive mix of Section A & B exam questions.</p>
+              </div>
+            </div>
 
-          <div class="sim-actions">
-            <button class="btn-action" id="sim-next-btn" disabled>Submit Answer</button>
+            <div class="sim-q-card">
+              <div style="font-size:0.82rem; color:var(--color-accent); font-weight:700; margin-bottom:0.6rem;">
+                Question <span id="sim-current-index">1</span> of <span id="sim-total-index">30</span>
+              </div>
+
+              <!-- Visual Diagram Box for Graph Questions -->
+              <div class="quiz-diagram-box" id="quiz-diagram-box" style="display:none;">
+                <!-- Embedded SVG diagram rendered dynamically -->
+              </div>
+
+              <div class="sim-q-title" id="sim-q-title">Loading question...</div>
+
+              <div class="sim-opt-list" id="sim-opt-list">
+                <!-- Options rendered dynamically -->
+              </div>
+            </div>
+
+            <div class="sim-explanation" id="sim-exp">
+              <!-- Explanation rendered dynamically -->
+            </div>
+
+            <div class="sim-actions">
+              <button class="btn-action" id="sim-next-btn" disabled>Submit Answer</button>
+            </div>
           </div>
         </div>
       </div>

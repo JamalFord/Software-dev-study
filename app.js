@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     sim: {
       title: "Practice Quizzes & Exam Simulator",
-      desc: "Interactive multi-section quizzes with visual diagram questions, SQL challenges, Design Patterns refactoring, and full exam simulation."
+      desc: "Select a question set from the Quiz Dashboard to start practicing visual graph questions, SQL queries, Design Patterns, or full exam simulations."
     }
   };
 
@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderDiagram('usecase');
 
-  // A4 NO-DIAGRAM CHEAT SHEET PLANNER LOGIC
+  // A4 CHEAT SHEET PLANNER LOGIC
   const a4Quadrants = document.querySelectorAll('.a4-quadrant');
   const copyTextArea = document.getElementById('copy-text-area');
   const detailTitle = document.getElementById('detail-title');
@@ -765,7 +765,9 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
     });
   }
 
-  // MULTI-CATEGORY QUIZ ENGINE (30 QUESTIONS TOTAL WITH GRAPH QUESTIONS)
+  // -------------------------------------------------------------
+  // MULTI-CATEGORY QUIZ ENGINE (30 QUESTIONS WITH DASHBOARD SELECTION)
+  // -------------------------------------------------------------
   const allQuizQuestions = [
     // --- CATEGORY 1: UML & VISUAL DIAGRAM QUESTIONS (cat: 'uml') ---
     {
@@ -961,7 +963,7 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
         "Strategy pattern requires database access."
       ],
       correct: 1,
-      exp: "Strategy swaps out 1 algorithm at a time for a context. Observer notifies 1-to-many subscribers simultaneously."
+      exp: "Strategy swaps 1 algorithm at a time for a context. Observer notifies 1-to-many subscribers simultaneously."
     },
     {
       cat: "patterns",
@@ -1086,7 +1088,7 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
     }
   ];
 
-  // Quiz Engine State
+  // Quiz Engine State Variables
   let currentCategory = "all";
   let activeQuestions = [];
   let quizIndex = 0;
@@ -1094,7 +1096,11 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
   let selectedOpt = null;
   let answered = false;
 
-  const quizSecBtns = document.querySelectorAll('.quiz-sec-btn');
+  // DOM Elements for Quiz Mode
+  const quizMenuView = document.getElementById('quiz-menu-view');
+  const quizActiveView = document.getElementById('quiz-active-view');
+  const btnBackMenu = document.getElementById('btn-back-menu');
+
   const quizCatTitle = document.getElementById('quiz-cat-title');
   const quizCatSubtitle = document.getElementById('quiz-cat-subtitle');
   const quizProgressBar = document.getElementById('quiz-progress-bar');
@@ -1116,7 +1122,16 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
     tdd: { title: "Section D: TDD, Testing & Debugging Quiz", sub: "7 questions on Red-Green-Refactor, BVA, Equivalence Partitioning, and NullPointer fixes." }
   };
 
-  function filterQuestions(cat) {
+  // Start Quiz from Category Card
+  const menuCards = document.querySelectorAll('.quiz-menu-card');
+  menuCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const cat = card.getAttribute('data-start-cat');
+      startQuizCategory(cat);
+    });
+  });
+
+  function startQuizCategory(cat) {
     currentCategory = cat;
     if (cat === 'all') {
       activeQuestions = [...allQuizQuestions];
@@ -1131,11 +1146,19 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
     simTotalEl.textContent = activeQuestions.length;
     simTotalIndex.textContent = activeQuestions.length;
 
-    quizSecBtns.forEach(b => b.classList.remove('active'));
-    const btn = document.querySelector(`.quiz-sec-btn[data-cat="${cat}"]`);
-    if (btn) btn.classList.add('active');
+    // Switch View
+    quizMenuView.style.display = 'none';
+    quizActiveView.style.display = 'block';
 
     loadQuestion();
+  }
+
+  // Back to Menu Button
+  if (btnBackMenu) {
+    btnBackMenu.addEventListener('click', () => {
+      quizActiveView.style.display = 'none';
+      quizMenuView.style.display = 'block';
+    });
   }
 
   function loadQuestion() {
@@ -1164,12 +1187,12 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
       quizDiagramBox.innerHTML = "";
     }
 
-    // Options
+    // Render Choices
     simOptList.innerHTML = '';
-    q.opts.forEach((opt, i) => {
+    q.opts.forEach((optText, i) => {
       const div = document.createElement('div');
       div.className = 'sim-opt';
-      div.innerHTML = `<span>${opt}</span><span class="opt-mark"></span>`;
+      div.innerHTML = `<span>${optText}</span><span class="opt-mark"></span>`;
       div.addEventListener('click', () => {
         if (answered) return;
         selectedOpt = i;
@@ -1181,16 +1204,10 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
     });
   }
 
-  quizSecBtns.forEach(b => {
-    b.addEventListener('click', () => {
-      const cat = b.getAttribute('data-cat');
-      filterQuestions(cat);
-    });
-  });
-
   if (simNextBtn) {
     simNextBtn.addEventListener('click', () => {
       if (!answered) {
+        if (selectedOpt === null) return;
         answered = true;
         const q = activeQuestions[quizIndex];
         const opts = simOptList.querySelectorAll('.sim-opt');
@@ -1242,22 +1259,26 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
                   finalPct >= 70 ? "Good score! Review your missed questions to push past 90%!" :
                   "Keep practicing! Study the visual diagrams and SQL templates, then retry."}
               </p>
-              <button class="btn-action" id="retry-quiz-btn" style="margin-top:1.5rem;">Retry Quiz Section</button>
+              <div style="display:flex; justify-content:center; gap:1rem; margin-top:1.5rem;">
+                <button class="btn-action" id="retry-quiz-btn">Retry Category</button>
+                <button class="btn-back-menu" id="finish-back-btn" style="padding:0.75rem 1.25rem;">Back to Quiz Dashboard</button>
+              </div>
             </div>
           `;
           simExp.classList.remove('visible');
           simNextBtn.style.display = 'none';
 
           document.getElementById('retry-quiz-btn').addEventListener('click', () => {
-            filterQuestions(currentCategory);
+            startQuizCategory(currentCategory);
+          });
+          document.getElementById('finish-back-btn').addEventListener('click', () => {
+            quizActiveView.style.display = 'none';
+            quizMenuView.style.display = 'block';
           });
         }
       }
     });
   }
-
-  // Initialize quiz with 'all'
-  filterQuestions('all');
 
   // Search Engine
   const searchInput = document.getElementById('search-input');
