@@ -67,7 +67,7 @@
           <li>
             <a class="nav-link" data-target="sim">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-              Practice Exam Simulator
+              Practice Quizzes & Exam
             </a>
           </li>
         </ul>
@@ -109,7 +109,7 @@
         <div class="rule-alert-banner">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z"></path></svg>
           <div class="rule-alert-text">
-            <strong>CRITICAL PROFESSOR RULE:</strong> Your handwritten A4 cheat sheet <strong>CANNOT HAVE ANY DIAGRAMS OR GRAPHS</strong> drawn on it. Use our <strong>Diagrams Visual Gallery</strong> tab on this site to memorize how diagrams look so you can answer exam questions effortlessly!
+            <strong>CRITICAL PROFESSOR RULE:</strong> Your handwritten A4 cheat sheet <strong>CANNOT HAVE ANY DIAGRAMS OR GRAPHS</strong> drawn on it. Practice our visual diagram quizzes to memorize how diagrams look so you can answer exam questions effortlessly!
           </div>
         </div>
 
@@ -164,7 +164,7 @@
       </div>
 
       <!-- ========================================= -->
-      <!-- NEW VIEW: DIAGRAMS VISUAL GALLERY -->
+      <!-- VIEW 2: DIAGRAMS VISUAL GALLERY -->
       <!-- ========================================= -->
       <div class="view-panel" id="diagrams-panel">
         <div class="diagram-category-bar">
@@ -480,22 +480,44 @@ Post-Condition / Teardown: Session token saved, user logged out.</div>
       </div>
 
       <!-- ========================================= -->
-      <!-- VIEW 7: PRACTICE EXAM SIMULATOR -->
+      <!-- VIEW 7: PRACTICE QUIZZES & EXAM SIMULATOR -->
       <!-- ========================================= -->
       <div class="view-panel" id="sim-panel">
         <div class="exam-sim-container">
+          <!-- Quiz Category Nav Buttons -->
+          <div class="quiz-section-nav">
+            <button class="quiz-sec-btn active" data-cat="all">🏆 Full Final Exam (30 Qs)</button>
+            <button class="quiz-sec-btn" data-cat="uml">📐 1. UML Diagrams & Visuals (8 Qs)</button>
+            <button class="quiz-sec-btn" data-cat="sql">💾 2. SQL Queries & JOINs (8 Qs)</button>
+            <button class="quiz-sec-btn" data-cat="patterns">⚙️ 3. Design Patterns (7 Qs)</button>
+            <button class="quiz-sec-btn" data-cat="tdd">🧪 4. TDD & Debugging (7 Qs)</button>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-fill" id="quiz-progress-bar"></div>
+          </div>
+
           <div class="exam-sim-header">
             <div>
-              <h3 style="color:#fff; font-size:1.3rem;">Final Exam Practice Simulator</h3>
-              <p style="font-size:0.85rem; color:var(--text-secondary);">Test yourself on SQL, TDD, Design Patterns, and Debugging.</p>
+              <h3 style="color:#fff; font-size:1.3rem;" id="quiz-cat-title">Full Final Exam Challenge</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary);" id="quiz-cat-subtitle">Comprehensive mix of Section A & B exam questions.</p>
             </div>
             <div style="font-family:var(--font-mono); color:var(--color-secondary);">
-              Score: <span id="sim-score" style="color:var(--color-success); font-weight:700;">0</span> / <span id="sim-total">6</span>
+              Score: <span id="sim-score" style="color:var(--color-success); font-weight:700;">0</span> / <span id="sim-total">30</span>
             </div>
           </div>
 
           <div class="sim-q-card">
-            <div style="font-size:0.8rem; color:var(--color-accent); font-weight:700; margin-bottom:0.5rem;">Question <span id="sim-current-index">1</span></div>
+            <div style="font-size:0.8rem; color:var(--color-accent); font-weight:700; margin-bottom:0.5rem;">
+              Question <span id="sim-current-index">1</span> of <span id="sim-total-index">30</span>
+            </div>
+
+            <!-- Visual Diagram Box for Graph Questions -->
+            <div class="quiz-diagram-box" id="quiz-diagram-box" style="display:none;">
+              <!-- Embedded SVG diagram rendered dynamically -->
+            </div>
+
             <div class="sim-q-title" id="sim-q-title">Loading question...</div>
 
             <div class="sim-opt-list" id="sim-opt-list">
