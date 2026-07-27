@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: "Interactive visual reference for Use Case, Class, Sequence, Activity, Context, ERD, and Design Pattern diagrams to memorize for Section A & B questions!"
     },
     planner: {
-      title: "Text-Only Cheat Sheet Blueprint (A4)",
-      desc: "STRICT NO-DIAGRAM BLUEPRINT. Formatted as clean text, SQL query templates, Java code blocks, and notation rules for your handwritten sheet."
+      title: "Text-Only Cheat Sheet Blueprint & Rule Comparisons",
+      desc: "Compare handwritten text rules side-by-side with exact visual diagram snippets to master both handwritten sheet creation and visual exam questions!"
     },
     sql: {
       title: "SQL Query Masterclass Workbench",
@@ -404,16 +404,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderDiagram('usecase');
 
-  // A4 CHEAT SHEET PLANNER LOGIC
+  // -------------------------------------------------------------
+  // A4 NO-DIAGRAM CHEAT SHEET PLANNER & RULE COMPARISONS
+  // -------------------------------------------------------------
   const a4Quadrants = document.querySelectorAll('.a4-quadrant');
   const copyTextArea = document.getElementById('copy-text-area');
   const detailTitle = document.getElementById('detail-title');
   const detailTag = document.getElementById('detail-tag');
+  const ruleCompWrapper = document.getElementById('rule-comp-wrapper');
+
+  const viewVisualBtn = document.getElementById('view-visual-rules-btn');
+  const viewRawBtn = document.getElementById('view-raw-text-btn');
+  const rawTextWrapper = document.getElementById('raw-text-wrapper');
+
+  if (viewVisualBtn && viewRawBtn) {
+    viewVisualBtn.addEventListener('click', () => {
+      viewVisualBtn.classList.add('active');
+      viewRawBtn.classList.remove('active');
+      ruleCompWrapper.style.display = 'flex';
+      rawTextWrapper.style.display = 'none';
+    });
+
+    viewRawBtn.addEventListener('click', () => {
+      viewRawBtn.classList.add('active');
+      viewVisualBtn.classList.remove('active');
+      ruleCompWrapper.style.display = 'none';
+      rawTextWrapper.style.display = 'block';
+    });
+  }
 
   const quadData = {
     "quad-1": {
-      title: "Side 1, Top: System Modeling & UML Rules (Textual)",
-      tag: "UML Rules & Text Syntax",
+      title: "Side 1, Top: System Modeling & UML Rules",
+      tag: "UML Rules & Visual Examples",
+      rules: [
+        {
+          name: "1. System Boundary",
+          code: "Boundary: Vertical Rectangle. System Name at top-left. Use Cases inside, Actors outside.",
+          desc: "Separates internal system responsibilities from external actors.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="50" y="10" width="150" height="110" fill="#fff" stroke="#334155" stroke-width="2" rx="4"/><text x="56" y="25" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0f172a">SmartHome System</text><ellipse cx="125" cy="65" rx="50" ry="18" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="125" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold" fill="#1e40af">Schedule Lights</text></svg>`
+        },
+        {
+          name: "2. Actor",
+          code: "Actor: Stick figure OUTSIDE boundary. Represents a role (Human, External DB, Weather API).",
+          desc: "Never draw actors inside the system boundary rectangle!",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><circle cx="110" cy="35" r="14" fill="none" stroke="#2563eb" stroke-width="2"/><line x1="110" y1="49" x2="110" y2="90" stroke="#2563eb" stroke-width="2"/><line x1="110" y1="60" x2="80" y2="75" stroke="#2563eb" stroke-width="2"/><line x1="110" y1="60" x2="140" y2="75" stroke="#2563eb" stroke-width="2"/><line x1="110" y1="90" x2="90" y2="120" stroke="#2563eb" stroke-width="2"/><line x1="110" y1="90" x2="130" y2="120" stroke="#2563eb" stroke-width="2"/><text x="110" y="128" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0f172a">User / Resident</text></svg>`
+        },
+        {
+          name: "3. <<include>> Relationship (Mandatory)",
+          code: "Format: [Base Case] --<<include>>--> [Included Case]\nDashed arrow points TO mandatory included case.",
+          desc: "Every time Base Case executes, Included Case MUST execute (e.g. Schedule Lights MUST Verify Auth).",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><ellipse cx="55" cy="65" rx="45" ry="18" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="55" y="68" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="bold">Schedule</text><ellipse cx="165" cy="65" rx="45" ry="18" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="165" y="68" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="bold">Verify Auth</text><path d="M 100 65 L 120 65" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3"/><polygon points="120,65 112,61 112,69" fill="#dc2626"/><text x="110" y="55" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="bold" fill="#dc2626">&lt;&lt;include&gt;&gt;</text></svg>`
+        },
+        {
+          name: "4. <<extend>> Relationship (Optional)",
+          code: "Format: [Optional Case] --<<extend>>--> [Base Case]\nDashed arrow points FROM optional case BACK TO base case.",
+          desc: "Optional execution under special conditions (e.g. Send SMS Alert extends Schedule Lights).",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><ellipse cx="165" cy="65" rx="45" ry="18" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="165" y="68" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="bold">Schedule</text><ellipse cx="55" cy="65" rx="45" ry="18" fill="#dcfce7" stroke="#166534" stroke-width="1.5"/><text x="55" y="68" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="bold">Send Alert</text><path d="M 100 65 L 120 65" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3"/><polygon points="120,65 112,61 112,69" fill="#d97706"/><text x="110" y="55" text-anchor="middle" font-family="sans-serif" font-size="7" font-weight="bold" fill="#d97706">&lt;&lt;extend&gt;&gt;</text></svg>`
+        },
+        {
+          name: "5. Generalization (extends)",
+          code: "Format: ChildClass --|> ParentClass\nSolid line + HOLLOW TRIANGLE pointing to parent.",
+          desc: "Inheritance relationship (e.g. Dog extends Animal).",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="130" y="45" width="70" height="40" fill="#fff" stroke="#0f172a" stroke-width="1.5"/><text x="165" y="68" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold">Animal</text><rect x="20" y="45" width="60" height="40" fill="#fff" stroke="#0f172a" stroke-width="1.5"/><text x="50" y="68" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold">Dog</text><line x1="80" y1="65" x2="130" y2="65" stroke="#2563eb" stroke-width="1.5"/><polygon points="130,65 118,58 118,72" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/></svg>`
+        },
+        {
+          name: "6. Realization (implements)",
+          code: "Format: Class ..|> Interface\nDashed line + HOLLOW TRIANGLE pointing to interface.",
+          desc: "Class implementing an interface (e.g. PayPal implements IPayable).",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="130" y="45" width="75" height="40" fill="#fff" stroke="#0f172a" stroke-width="1.5"/><text x="167" y="62" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#92400e">&lt;&lt;interface&gt;&gt;</text><text x="167" y="74" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">IPayable</text><rect x="15" y="45" width="65" height="40" fill="#fff" stroke="#0f172a" stroke-width="1.5"/><text x="47" y="68" text-anchor="middle" font-family="sans-serif" font-size="8.5" font-weight="bold">PayPal</text><line x1="80" y1="65" x2="130" y2="65" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,4"/><polygon points="130,65 118,58 118,72" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/></svg>`
+        },
+        {
+          name: "7. Composition (Part-of)",
+          code: "Format: Parent <filled-diamond>-- Child\nSolid line + FILLED BLACK DIAMOND on parent side.",
+          desc: "Coincident dependent lifecycle. If Department is deleted, LabTest is deleted.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="15" y="45" width="75" height="40" fill="#fff" stroke="#0f172a" stroke-width="1.5"/><text x="52" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">Department</text><rect x="135" y="45" width="70" height="40" fill="#fff" stroke="#0f172a" stroke-width="1.5"/><text x="170" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">LabTest</text><line x1="90" y1="65" x2="135" y2="65" stroke="#dc2626" stroke-width="1.5"/><polygon points="90,65 98,59 106,65 98,71" fill="#dc2626" stroke="#dc2626"/></svg>`
+        },
+        {
+          name: "8. Sequence alt Frame (IF-ELSE)",
+          code: "Format: alt [condition] outer frame.\nDivided by horizontal dashed line (Top = true, Bottom = else).",
+          desc: "Represents conditional IF-ELSE execution in sequence diagrams.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="15" y="15" width="190" height="100" fill="none" stroke="#d97706" stroke-width="1.5"/><path d="M 15 15 L 55 15 L 65 28 L 15 28 Z" fill="#fef3c7" stroke="#d97706"/><text x="30" y="25" font-family="sans-serif" font-size="8" font-weight="bold" fill="#92400e">alt [valid]</text><line x1="15" y1="65" x2="205" y2="65" stroke="#d97706" stroke-dasharray="4,4"/><text x="25" y="55" font-family="sans-serif" font-size="7.5" fill="#166534">playMovie()</text><text x="25" y="90" font-family="sans-serif" font-size="7.5" fill="#991b1b">displayError()</text></svg>`
+        }
+      ],
       text: `=================================================
 SECTION 1: SYSTEM MODELING & UML (TEXTUAL SYNTAX)
 =================================================
@@ -463,13 +536,23 @@ NO DIAGRAMS ALLOWED ON CHEAT SHEET - WRITE THESE TEXT RULES:
     "quad-2": {
       title: "Side 1, Bottom: SQL Queries Cheat Code & Syntax",
       tag: "SQL Queries Masterclass",
+      rules: [
+        {
+          name: "1. WHERE vs HAVING Rule",
+          code: "WHERE filters individual rows BEFORE GROUP BY.\nHAVING filters aggregated groups AFTER GROUP BY.",
+          desc: "HAVING requires aggregate functions (COUNT, SUM, AVG).",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="15" y="15" width="190" height="40" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" rx="6"/><text x="25" y="38" font-family="sans-serif" font-size="8.5" font-weight="bold" fill="#1e40af">WHERE Salary > 50000</text><path d="M 110 55 L 110 75" stroke="#0f172a" stroke-width="1.5"/><polygon points="110,75 105,67 115,67" fill="#0f172a"/><rect x="15" y="75" width="190" height="40" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" rx="6"/><text x="25" y="98" font-family="sans-serif" font-size="8.5" font-weight="bold" fill="#92400e">HAVING COUNT(*) > 5</text></svg>`
+        },
+        {
+          name: "2. LEFT JOIN NULL Check (Unassigned Records)",
+          code: "SELECT c.FirstName FROM Customers c LEFT JOIN Orders o ON c.ID = o.ID WHERE o.ID IS NULL;",
+          desc: "Isolates customers who NEVER placed an order.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><circle cx="80" cy="65" r="45" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5" opacity="0.8"/><circle cx="140" cy="65" r="45" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" opacity="0.5"/><text x="60" y="68" font-family="sans-serif" font-size="9" font-weight="bold" fill="#1e40af">Customers</text><text x="145" y="68" font-family="sans-serif" font-size="8" font-weight="bold" fill="#991b1b">Orders=NULL</text></svg>`
+        }
+      ],
       text: `=================================================
 SECTION 2: SQL SYNTAX & EXAM QUERY TEMPLATES
 =================================================
-SQL COMMAND TYPES:
-- DDL (Data Definition): CREATE, ALTER, DROP, TRUNCATE.
-- DML (Data Manipulation): SELECT, INSERT, UPDATE, DELETE.
-
 SELECT QUERY SYNTAX TEMPLATE:
   SELECT [DISTINCT] col1, col2, col3 * 1.10 AS "New Salary"
   FROM Table1 t1
@@ -494,112 +577,66 @@ EXAM OPERATORS & PATTERNS:
 4. Aggregates & Grouping:
    - COUNT(*), SUM(Salary), AVG(Salary), MAX(Salary), MIN(Salary)
    - Rule: Any non-aggregated column in SELECT *must* appear in GROUP BY!
-   - HAVING is used to filter AFTER GROUP BY (e.g. HAVING AVG(Salary) > 65000).
-
-CRITICAL JOIN TEMPLATES:
-- INNER JOIN (only matching rows):
-  SELECT e.FirstName, e.LastName, d.DepartmentName
-  FROM Employees e INNER JOIN Departments d ON e.DepartmentID = d.DepartmentID;
-
-- LEFT JOIN (Find missing/unassigned items):
-  SELECT c.FirstName, c.LastName
-  FROM Customers c LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
-  WHERE o.OrderID IS NULL; -- Customers who NEVER placed an order!
-
-- SELF-JOIN (Employees reporting to Manager Smith):
-  SELECT e.FirstName + ' ' + e.LastName AS "Employee", m.FirstName + ' ' + m.LastName AS "Manager"
-  FROM Employees e INNER JOIN Employees m ON e.ManagerID = m.EmployeeID
-  WHERE m.LastName = 'Smith';
-
-- EMPLOYEES EARNING MORE THAN THEIR MANAGER:
-  SELECT e.FirstName, e.Salary, m.FirstName AS MgrName, m.Salary AS MgrSalary
-  FROM Employees e INNER JOIN Employees m ON e.ManagerID = m.EmployeeID
-  WHERE e.Salary > m.Salary;`
+   - HAVING is used to filter AFTER GROUP BY (e.g. HAVING AVG(Salary) > 65000).`
     },
     "quad-3": {
       title: "Side 2, Top: Design Patterns Code & Principles",
       tag: "Design Patterns",
+      rules: [
+        {
+          name: "1. Observer Pattern Structure",
+          code: "Subject interface maintains List<Observer>. notifyObservers() loops and calls update().",
+          desc: "Used for 1-to-many email/SMS/Slack notification alerts.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="15" y="45" width="75" height="40" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="52" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">Subject</text><rect x="130" y="45" width="75" height="40" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="167" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">Observer</text><line x1="90" y1="65" x2="130" y2="65" stroke="#2563eb" stroke-width="1.5"/><polygon points="130,65 122,60 122,70" fill="#2563eb"/></svg>`
+        },
+        {
+          name: "2. Strategy Pattern Structure",
+          code: "Context holds reference to IShippingStrategy interface to swap algorithms at runtime.",
+          desc: "Replaces long if(country=='USA') else if('Canada') ladders.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><rect x="15" y="45" width="75" height="40" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="52" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">Context</text><rect x="130" y="45" width="75" height="40" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/><text x="167" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold">IStrategy</text><line x1="90" y1="65" x2="130" y2="65" stroke="#2563eb" stroke-width="1.5"/><polygon points="130,65 122,60 122,70" fill="#2563eb"/></svg>`
+        }
+      ],
       text: `=================================================
 SECTION 3: DESIGN PATTERNS & CODE REFACTORING
 =================================================
-THE 4 PATTERN ELEMENTS: Name, Problem, Solution, Consequences.
-
 1. SINGLETON (Creational):
-   - Purpose: Ensure a class has ONLY ONE instance and provide a global point of access.
-   - Code Template:
-     public class DatabaseConnection {
-       private static DatabaseConnection _instance;
-       private DatabaseConnection() {} // Private Constructor!
-       public static synchronized DatabaseConnection getInstance() {
-         if (_instance == null) _instance = new DatabaseConnection();
-         return _instance;
-       }
-     }
-
+   - Private static instance AND private constructor with getInstance().
 2. FACTORY METHOD (Creational):
-   - Purpose: Define interface for creating an object, but let subclasses decide which class to instantiate.
-
+   - Interface for creating objects; subclasses decide instantiation.
 3. ADAPTER (Structural):
-   - Purpose: Allow incompatible interfaces to work together (Wrapper for legacy code).
-   - Code Template:
-     public class PayrollAdapter implements INewHRSystem {
-       private LegacyPayroll _legacy; // Reference to old legacy system
-       public PayrollAdapter(LegacyPayroll legacy) { this._legacy = legacy; }
-       public void processPay() { _legacy.oldPayMethod(); } // Delegates
-     }
-
+   - Wrapper class translating legacy interface to new app interface.
 4. DECORATOR (Structural):
-   - Purpose: Attach additional responsibilities to an object dynamically at runtime without subclassing (e.g. scrollbars to text box, coffee toppings).
-
+   - Dynamic wrapper adding responsibilities at runtime (scrollbars, toppings).
 5. OBSERVER (Behavioral):
-   - Purpose: One-to-many dependency so when one object changes state, all subscribers are notified automatically (Publish/Subscribe).
-   - EXAM SCENARIO: Course cancellation email/SMS/Slack alerts.
-   - Subject maintains List<Observer>. notifyObservers() loops and calls observer.update().
-   - Why Strategy is WRONG here: Strategy swaps 1 algorithm at a time; Observer broadcasts to MULTIPLE unknown subscribers.
-
+   - 1-to-many publish/subscribe alerts (Course cancellation email/SMS).
 6. STRATEGY (Behavioral):
-   - Purpose: Define a family of algorithms, encapsulate each one, and make them interchangeable at runtime.
-   - EXAM SCENARIO: Shipping calculator with if(country=="USA") else if("Canada") ladder.
-   - Refactor: Create IShippingStrategy interface with calculate(Order o). Classes USAShipping, CanadaShipping implement it.`
+   - Interchangeable algorithms replacing if-else ladders.`
     },
     "quad-4": {
       title: "Side 2, Bottom: TDD, Testing & Debugging Rules",
       tag: "Testing & Debugging",
+      rules: [
+        {
+          name: "1. TDD Red-Green-Refactor Cycle",
+          code: "1. Red (Failing Test) -> 2. Green (Minimal Code) -> 3. Refactor (Clean Code).",
+          desc: "Write unit tests BEFORE production code.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><circle cx="50" cy="65" r="22" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/><text x="50" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold" fill="#b91c1c">RED</text><circle cx="170" cy="65" r="22" fill="#dcfce7" stroke="#10b981" stroke-width="2"/><text x="170" y="68" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="bold" fill="#15803d">GREEN</text><path d="M 75 65 L 145 65" stroke="#0f172a" stroke-width="1.5"/><polygon points="145,65 137,60 137,70" fill="#0f172a"/></svg>`
+        },
+        {
+          name: "2. Boundary Value Analysis (BVA)",
+          code: "For range [58000, 105000]:\nTest 6 values: 57999, 58000, 58001, 104999, 105000, 105001.",
+          desc: "Tests MIN-1, MIN, MIN+1, MAX-1, MAX, MAX+1.",
+          svg: `<svg width="220" height="130" viewBox="0 0 220 130"><rect width="220" height="130" fill="#f8fafc"/><line x1="20" y1="65" x2="200" y2="65" stroke="#0f172a" stroke-width="2"/><circle cx="60" cy="65" r="5" fill="#dc2626"/><text x="60" y="85" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="bold">58,000</text><circle cx="160" cy="65" r="5" fill="#dc2626"/><text x="160" y="85" text-anchor="middle" font-family="sans-serif" font-size="7.5" font-weight="bold">105,000</text></svg>`
+        }
+      ],
       text: `=================================================
 SECTION 4: TDD, UNIT TESTING & DEBUGGING
 =================================================
-1. TEST-DRIVEN DEVELOPMENT (TDD) CYCLE:
-   - Red: Write a failing unit test first.
-   - Green: Write MINIMAL code required to pass the test as fast as possible.
-   - Refactor: Clean up code & structure while keeping tests green.
-
-2. UNIT TEST CASE DOCUMENTATION TEMPLATE (Section B Question):
-   - Test Case ID: TC_LOGIN_001
-   - Title/Scenario: Valid User Login
-   - Pre-condition: User with valid credentials exists in DB, on login page.
-   - Inputs: Username: "testuser", Password: "validPass123"
-   - Test Steps: 1. Enter username. 2. Enter password. 3. Click Login button.
-   - Expected Output (Oracle): User redirected to Dashboard, session token created.
-   - Actual Output: User redirected to Dashboard.
-   - Status: PASS / FAIL
-   - Post-condition / Teardown: Session token saved, user logged out.
-
-3. TEST CASE DESIGN TECHNIQUES:
-   - Equivalence Partitioning (EP): Divide input domain into valid and invalid equivalence classes. Select 1 test case per partition.
-   - Boundary Value Analysis (BVA): Test values directly on the boundaries of valid ranges!
-     Rule for Range [MIN, MAX]: Test 6 values:
-     (MIN - 1), MIN, (MIN + 1), (MAX - 1), MAX, (MAX + 1).
-     Example for Salary Range [58000, 105000]:
-     Test: 57999 (Invalid), 58000 (Valid), 58001 (Valid), 104999 (Valid), 105000 (Valid), 105001 (Invalid).
-
-4. JAVA DEBUGGING & CLEAN CODE CHECKLIST:
-   - NullPointer: Always check for null before invoking methods!
-     Bad:  if (input.equals("ADMIN"))
-     Good: if ("ADMIN".equalsIgnoreCase(input)) OR if (input != null && input.equalsIgnoreCase("ADMIN"))
-   - Resource Leak: Always close Sockets, DB Connections, File Streams inside a finally block or try-with-resources!
-     try (Scanner sc = new Scanner(file)) { ... } // Auto-closed!
-   - Collections: Return an empty collection (new ArrayList<>()) instead of null to prevent NPEs in caller loops.
-   - Exceptions: Never catch Exception silently. Log detailed diagnostic info and throw custom exception.`
+1. TDD CYCLE: Red (Failing test) -> Green (Minimal pass) -> Refactor.
+2. BVA RANGE [MIN, MAX]: Test 6 values: (MIN-1), MIN, (MIN+1), (MAX-1), MAX, (MAX+1).
+3. JAVA NPE FIX: Use "ADMIN".equals(input) instead of input.equals("ADMIN").
+4. STREAM SAFETY: Close DB/File streams in finally or try-with-resources.
+5. EMPTY COLLECTIONS: Return new ArrayList<>() instead of null.`
     }
   };
 
@@ -614,6 +651,25 @@ SECTION 4: TDD, UNIT TESTING & DEBUGGING
     detailTitle.textContent = data.title;
     detailTag.textContent = data.tag;
     copyTextArea.textContent = data.text;
+
+    // Render Rule-by-Rule Visual Comparison Cards
+    let html = '';
+    data.rules.forEach(r => {
+      html += `
+        <div class="rule-comp-card">
+          <div class="rule-comp-text-side">
+            <h4>${r.name}</h4>
+            <div class="rule-comp-sheet-code">${r.code}</div>
+            <div class="rule-comp-desc">${r.desc}</div>
+          </div>
+          <div class="rule-comp-visual-box">
+            ${r.svg}
+          </div>
+        </div>
+      `;
+    });
+
+    ruleCompWrapper.innerHTML = html;
   }
 
   a4Quadrants.forEach(q => {

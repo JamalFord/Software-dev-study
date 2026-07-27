@@ -109,7 +109,7 @@
         <div class="rule-alert-banner">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z"></path></svg>
           <div class="rule-alert-text">
-            <strong>CRITICAL PROFESSOR RULE:</strong> Your handwritten A4 cheat sheet <strong>CANNOT HAVE ANY DIAGRAMS OR GRAPHS</strong> drawn on it. Practice our visual diagram quizzes to memorize how diagrams look so you can answer exam questions effortlessly!
+            <strong>CRITICAL PROFESSOR RULE:</strong> Your handwritten A4 cheat sheet <strong>CANNOT HAVE ANY DIAGRAMS OR GRAPHS</strong> drawn on it. Use our side-by-side rule comparisons below to understand how every text rule maps 1-to-1 to visual diagrams!
           </div>
         </div>
 
@@ -202,19 +202,20 @@
       </div>
 
       <!-- ========================================= -->
-      <!-- VIEW 3: NO-DIAGRAM CHEAT SHEET PLANNER -->
+      <!-- VIEW 3: NO-DIAGRAM CHEAT SHEET PLANNER & RULE COMPARISONS -->
       <!-- ========================================= -->
       <div class="view-panel" id="planner-panel">
         <div class="cheat-planner-layout">
           <div class="sheet-mockup-wrapper">
-            <h3 style="color:#fff; margin-bottom:1rem;">Interactive A4 Sheet Layout (Click a Quadrant)</h3>
+            <h3 style="color:#fff; margin-bottom:0.75rem; font-size:1.1rem;">A4 Quadrant Selector</h3>
+            <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem;">Click a quadrant to inspect its rule-by-rule visual comparisons:</p>
             <div class="a4-sheet">
               <div class="a4-quadrant active" data-id="quad-1">
                 <div class="quad-header">
-                  <span>Quad 1: UML Text Rules</span>
+                  <span>Quad 1: UML Rules</span>
                   <span class="quad-badge">1</span>
                 </div>
-                <div class="quad-preview-text">Use Case, Class, Sequence, Activity, Context notation in text format...</div>
+                <div class="quad-preview-text">Use Case, Class, Sequence, Activity, Context notation...</div>
               </div>
 
               <div class="a4-quadrant" data-id="quad-2">
@@ -222,7 +223,7 @@
                   <span>Quad 2: SQL Cheat Code</span>
                   <span class="quad-badge">2</span>
                 </div>
-                <div class="quad-preview-text">SELECT, JOIN, WHERE, GROUP BY, HAVING, NULL checks, LIKE wildcards...</div>
+                <div class="quad-preview-text">SELECT, JOIN, WHERE, GROUP BY, HAVING, NULL checks...</div>
               </div>
 
               <div class="a4-quadrant" data-id="quad-3">
@@ -230,7 +231,7 @@
                   <span>Quad 3: Design Patterns</span>
                   <span class="quad-badge">3</span>
                 </div>
-                <div class="quad-preview-text">Singleton, Factory, Adapter, Decorator, Observer, Strategy Java code...</div>
+                <div class="quad-preview-text">Singleton, Factory, Adapter, Decorator, Observer, Strategy...</div>
               </div>
 
               <div class="a4-quadrant" data-id="quad-4">
@@ -238,29 +239,41 @@
                   <span>Quad 4: TDD & Debugging</span>
                   <span class="quad-badge">4</span>
                 </div>
-                <div class="quad-preview-text">Red-Green-Refactor, Test Case Table, BVA values, Java NPE fixes...</div>
+                <div class="quad-preview-text">Red-Green-Refactor, Test Case Table, BVA values...</div>
               </div>
             </div>
           </div>
 
-          <!-- Detail Card -->
+          <!-- Detail Card with Rule-by-Rule Visual Comparison Inspector -->
           <div class="quad-detail-card">
             <div class="detail-head">
-              <div style="font-weight:700; color:#fff; font-size:1.1rem;" id="detail-title">Side 1, Top: System Modeling & UML Text Rules</div>
-              <span class="detail-tag" id="detail-tag">UML Rules & Text Syntax</span>
+              <div>
+                <div style="font-weight:700; color:#fff; font-size:1.2rem;" id="detail-title">Side 1, Top: System Modeling & UML Rules</div>
+                <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.2rem;">Side-by-Side Comparison: Handwritten Text Rule vs Visual Diagram Snippet</div>
+              </div>
+              <span class="detail-tag" id="detail-tag">UML Rules & Visual Examples</span>
             </div>
 
-            <p style="font-size:0.85rem; color:var(--text-secondary);">
-              Copy the text below directly onto your physical handwritten paper. It uses ZERO diagrams while covering 100% of UML rules:
-            </p>
-
-            <div class="copy-text-area" id="copy-text-area">
-              <!-- Loaded dynamically via JS -->
+            <!-- View Toggle: Rule-by-Rule Visual vs Raw Handwritten Text -->
+            <div style="display:flex; gap:0.6rem; margin-bottom:1.25rem;">
+              <button class="diag-tab-btn active" id="view-visual-rules-btn">🖼️ Side-by-Side Visual Comparison</button>
+              <button class="diag-tab-btn" id="view-raw-text-btn">📝 Copyable Handwritten Sheet Text</button>
             </div>
 
-            <button class="btn-action" id="copy-cheat-btn" style="width:100%; margin-top:1.25rem;">
-              Copy Text to Handwritten Sheet
-            </button>
+            <!-- 1. Rule-by-Rule Visual Comparisons Container -->
+            <div id="rule-comp-wrapper" class="rule-comparison-container">
+              <!-- Loaded dynamically via app.js -->
+            </div>
+
+            <!-- 2. Raw Copyable Text Area (Hidden by default) -->
+            <div id="raw-text-wrapper" style="display:none;">
+              <div class="copy-text-area" id="copy-text-area">
+                <!-- Loaded dynamically via JS -->
+              </div>
+              <button class="btn-action" id="copy-cheat-btn" style="width:100%; margin-top:1.25rem;">
+                Copy Text to Handwritten Sheet
+              </button>
+            </div>
           </div>
         </div>
       </div>
